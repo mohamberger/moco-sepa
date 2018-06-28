@@ -2,7 +2,7 @@ import fetch from './paginated-fetch';
 import SEPA from 'sepa';
 
 async function mocoRequest(url, params, method = 'GET') {
-    return (await fetch(`${process.env.MOCO_API}/${url}`, {
+    return (await fetch(`https://${process.env.MOCO_WORKSPACE}.mocoapp.com/api/v1/${url}`, {
         method,
         headers: {
             'Authorization': `Token token="${process.env.MOCO_TOKEN}"`
