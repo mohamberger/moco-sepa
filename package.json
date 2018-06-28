@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve:backend": "netlify-lambda serve src/functions"
+    "serve:backend": "netlify-lambda serve src/functions",
+    "build:backend": "netlify-lambda build src/functions"
   },
   "dependencies": {
     "dotenv": "^6.0.0",
