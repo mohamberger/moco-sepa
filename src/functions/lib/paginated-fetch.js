@@ -1,7 +1,7 @@
 import parseLinkHeader from 'parse-link-header';
 import fetch from 'node-fetch';
 
-export default function(url, options = {}) {
+const fetchPaginate = (url, options = {}) => {
     const {
         paginate = true,
         items = data => data,
@@ -13,6 +13,10 @@ export default function(url, options = {}) {
 
     return fetch(url, rest)
         .then(async res => {
+            if (!res.ok) {
+                throw new Error(`Server answered with status ${res.status} ${res.statusText}: ${(await res.text()) || "(no body)"}`);
+            }
+
             const pageData = await parse(res);
 
             if (res.ok && paginate && !until(pageData, res)) {
@@ -32,8 +36,6 @@ export default function(url, options = {}) {
                         }
                     }
                 }
-            } else if (!res.ok) {
-                throw new Error(`Server answered with status ${res.status}: ${await res.text()}`);
             }
 
             return {
@@ -42,3 +44,5 @@ export default function(url, options = {}) {
             }
         })
 };
+
+export default fetchPaginate;

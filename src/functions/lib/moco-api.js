@@ -1,10 +1,8 @@
 import fetch from './paginated-fetch';
 import SEPA from 'sepa';
 
-const API_URL = 'https://duplexmedia.mocoapp.com/api/v1';
-
 async function mocoRequest(url, params, method = 'GET') {
-    return (await fetch(`${API_URL}/${url}`, {
+    return (await fetch(`${process.env.MOCO_API}/${url}`, {
         method,
         headers: {
             'Authorization': `Token token="${process.env.MOCO_TOKEN}"`
