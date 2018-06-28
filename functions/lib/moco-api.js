@@ -1,5 +1,5 @@
-const fetch = require('./paginated-fetch');
-const SEPA = require('sepa');
+import fetch from './paginated-fetch';
+import SEPA from 'sepa';
 
 const API_URL = 'https://duplexmedia.mocoapp.com/api/v1';
 
