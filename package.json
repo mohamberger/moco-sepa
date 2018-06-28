@@ -1,0 +1,13 @@
+{
+  "name": "sepa-tool",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+    "netlify-lambda": "^0.4.0",
+    "node-fetch": "^2.1.2",
+    "parse-link-header": "latest",
+    "sepa": "^1.0.3"
+  }
+}
