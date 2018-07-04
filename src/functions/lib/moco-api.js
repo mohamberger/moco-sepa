@@ -1,10 +1,8 @@
 import fetch from './paginated-fetch';
 import SEPA from 'sepa';
-import delay from 'await-delay';
 
 async function mocoRequest(url, params, method = 'GET') {
-    // We need this to avoid hitting MOCO's rate limits
-    await delay(1000);
+    console.log('Request to', url);
 
     return (await fetch(`https://${process.env.MOCO_WORKSPACE}.mocoapp.com/api/v1/${url}`, {
         method,
@@ -29,9 +27,10 @@ function parseDate(input) {
 
 export async function getSepaTransfers() {
     const invoices = await mocoRequest('invoices/?status=sent');
+    const projects = await mocoRequest('projects?include_archived=true&include_company=true');
 
     return (await Promise.all(invoices.map(async i => {
-        const project = await mocoRequest(`projects/${i.project_id}`);
+        const project = projects.filter(p => p.id === i.project_id)[0];
 
         if(!project) {
             throw Error(`No project with id ${i.project_id} found!`);
@@ -45,7 +44,7 @@ export async function getSepaTransfers() {
             return;
         }
 
-        const customer = await mocoRequest(`customers/${i.customer_id}`);
+        const customer = project.customer;
 
         return {
             total: i.gross_total,
