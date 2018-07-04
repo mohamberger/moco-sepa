@@ -16,7 +16,7 @@ export const handler = async (event, context, callback) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({error: e})
+            body: JSON.stringify({error: e.message})
         })
     }
 };
