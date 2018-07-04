@@ -51,6 +51,7 @@ export async function getSepaTransfers() {
         return {
             total: i.gross_total,
             date: i.date,
+            due_date: parseDate(i.due_date),
             identifier: i.identifier,
             iban: customer.custom_properties['IBAN'],
             bic: customer.custom_properties['BIC'],
