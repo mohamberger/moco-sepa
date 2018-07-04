@@ -1,6 +1,8 @@
 import fetch from './paginated-fetch';
 import SEPA from 'sepa';
 
+require('dotenv').config();
+
 async function mocoRequest(url, params, method = 'GET') {
     console.log('Request to', url);
 
