@@ -84,6 +84,7 @@ export async function getSepaXml() {
         tx.mandateSignatureDate = s.mandate_date;
         tx.amount = s.total;
         tx.remittanceInfo = s.identifier;
+        tx.id = `${s.mandate_reference}.${s.remittanceInfo}`;
         tx.end2endId = `${s.mandate_reference}.${s.remittanceInfo}`;
         info.addTransaction(tx);
     }
