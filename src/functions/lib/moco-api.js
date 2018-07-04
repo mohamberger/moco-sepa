@@ -68,7 +68,7 @@ export async function getSepaXml() {
     sepaDocument.grpHdr.initiatorName = process.env.CREDITOR_NAME;
 
     const info = sepaDocument.createPaymentInfo();
-    info.collectionDate = new Date();
+    info.collectionDate = Date.now() + (1000 * 60 * 60 * 24 * (process.env.COLLECTION_DAYS || 14));
     info.creditorIBAN = process.env.CREDITOR_IBAN;
     info.creditorBIC = process.env.CREDITOR_BIC;
     info.creditorName = process.env.CREDITOR_NAME;
