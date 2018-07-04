@@ -130,6 +130,10 @@ atob@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.1.tgz#ae2d5a729477f289d60dd7f96a6314a22dd6c22a"
 
+await-delay@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/await-delay/-/await-delay-1.0.0.tgz#a74ab0eaa880cd38e100cf1f8d8418d44cab1b4d"
+
 babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"

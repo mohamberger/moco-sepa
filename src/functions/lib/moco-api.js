@@ -1,7 +1,11 @@
 import fetch from './paginated-fetch';
 import SEPA from 'sepa';
+import delay from 'await-delay';
 
 async function mocoRequest(url, params, method = 'GET') {
+    // We need this to avoid hitting MOCO's rate limits
+    await delay(1000);
+
     return (await fetch(`https://${process.env.MOCO_WORKSPACE}.mocoapp.com/api/v1/${url}`, {
         method,
         headers: {
