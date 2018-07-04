@@ -62,7 +62,7 @@ export async function getSepaTransfers() {
 }
 
 export async function getSepaXml() {
-    const sepaDocument = new SEPA.Document('pain.008.001.02');
+    const sepaDocument = new SEPA.Document('pain.008.003.02');
     sepaDocument.grpHdr.id = `DPLX.${Date.now()}.TR0`;
     sepaDocument.grpHdr.created = new Date();
     sepaDocument.grpHdr.initiatorName = process.env.CREDITOR_NAME;
