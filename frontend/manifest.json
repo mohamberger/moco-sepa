@@ -1,0 +1,6 @@
+{
+  "name": "sepa-tool",
+  "short_name": "sepa-tool",
+  "start_url": "/",
+  "display": "standalone"
+}
