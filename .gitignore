@@ -116,3 +116,4 @@ fabric.properties
 .idea/httpRequests
 
 /functions/
+build/

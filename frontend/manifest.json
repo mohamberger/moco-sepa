@@ -1,6 +1,6 @@
 {
-  "name": "sepa-tool",
-  "short_name": "sepa-tool",
+  "name": "MOCO SEPA",
+  "short_name": "MOCO SEPA",
   "start_url": "/",
   "display": "standalone"
 }

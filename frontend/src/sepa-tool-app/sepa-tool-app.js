@@ -1,28 +1,124 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
+import '@polymer/polymer/lib/elements/dom-repeat';
+import '@polymer/paper-button/paper-button';
+import '@polymer/paper-card/paper-card';
+import '@polymer/paper-spinner/paper-spinner';
+import '@polymer/paper-item/paper-icon-item';
+import '@polymer/paper-item/paper-item-body';
+import '@polymer/paper-icon-button/paper-icon-button';
+import '@polymer/iron-icons/iron-icons';
+
 /**
  * @customElement
  * @polymer
  */
 class SepaToolApp extends PolymerElement {
-  static get template() {
-    return html`
-      <style>
-        :host {
-          display: block;
+    static get template() {
+        return html`
+            <style>
+                :host {
+                    max-width: 500px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    justify-content: center;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji";
+                }
+                
+                .avatar {
+                    background: #efefef;
+                    border-radius: 50%;
+                    height: 40px;
+                    width: 40px;
+                }
+                
+                h1 {
+                    text-align: center;
+                }
+                
+                paper-card {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+                
+                .spinner {
+                    display: flex;
+                    height: 72px;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                [hidden] {
+                    display: none;
+                }
+                
+                paper-button {
+                    background-color: #38b5eb;
+                    color: #fff;
+                    margin: 0;
+                }
+            </style>
+            
+            <h1>SEPA Export</h1>
+            
+            <paper-card heading="Available Transactions">
+                <div class="spinner" hidden$="[[!loading]]">
+                    <paper-spinner active></paper-spinner>
+                </div>
+                <div class="transactions">
+                    <template is="dom-repeat" items="[[transactions]]">
+                        <paper-icon-item>
+                            <img class="avatar" slot="item-icon" src="[[item.image]]" alt="Customer Avatar">
+                            <paper-item-body two-line>
+                                <div>[[item.title]]</div>
+                                <div secondary>[[item.debtor_name]] &middot; [[item.total]] €</div>
+                            </paper-item-body>
+                            <paper-icon-button icon="open-in-new" alt="Open invoice in MOCO" on-tap="openInvoice"></paper-icon-button>
+                        </paper-icon-item>
+                    </template>
+                </div>
+            </paper-card>
+            
+            <paper-button raised on-tap="downloadXml">Download SEPA XML file</paper-button>
+        `;
+    }
+
+    static get properties() {
+        return {
+            transactions: {
+                type: Array,
+                value: () => []
+            },
+            loading: {
+                type: Boolean,
+                value: true
+            }
+        };
+    }
+
+    openInvoice(e) {
+        window.open(e.model.get('item.link'));
+    }
+
+    downloadXml() {
+        window.open('/api/getSepaXml');
+    }
+
+    async ready() {
+        super.ready();
+
+        const results = await (await fetch('/api/getSepaTransfers')).json();
+        this.loading = false;
+
+        if(results.error) {
+            alert(results.error);
+            return;
         }
-      </style>
-      <h2>Hello [[prop1]]!</h2>
-    `;
-  }
-  static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'sepa-tool-app'
-      }
-    };
-  }
+
+        this.transactions = results;
+    }
 }
 
 window.customElements.define('sepa-tool-app', SepaToolApp);

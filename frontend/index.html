@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>sepa-tool</title>
+    <title>MOCO SEPA</title>
+    <meta name="robots" content="noindex">
     <meta name="description" content="sepa-tool description">
 
     <!-- See https://goo.gl/OOhYW5 -->
@@ -13,6 +14,20 @@
     <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
     <script type="module" src="/src/sepa-tool-app/sepa-tool-app.js"></script>
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 100px 10px;
+        box-sizing: border-box;
+        min-height: 100%;
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        background-color: #fafafa;
+      }
+    </style>
   </head>
   <body>
     <sepa-tool-app></sepa-tool-app>
