@@ -28,8 +28,10 @@ function parseDate(input) {
 }
 
 export async function getSepaTransfers() {
-    const invoices = await mocoRequest('invoices/?status=sent');
-    const projects = await mocoRequest('projects?include_archived=true&include_company=true');
+    const [invoices, projects] = await Promise.all([
+        mocoRequest('invoices/?status=sent'),
+        mocoRequest('projects?include_archived=true&include_company=true')
+    ]);
 
     return (await Promise.all(invoices.map(async i => {
         const project = projects.filter(p => p.id === i.project_id)[0];
@@ -82,7 +84,7 @@ export async function getSepaXml() {
         const tx = info.createTransaction();
         tx.debtorName = s.debtor_name;
         tx.debtorIBAN = s.iban;
-        tx.debtorBIC = s.bic;
+        tx.debtorBIC = 'DUSSDEDDXXX';
         tx.mandateId = s.mandate_reference;
         tx.mandateSignatureDate = s.mandate_date;
         tx.amount = s.total;

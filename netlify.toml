@@ -1,4 +1,4 @@
 [build]
   functions = "functions"
-  command = "yarn build:backend"
+  command = "yarn build"
   publish = "test"

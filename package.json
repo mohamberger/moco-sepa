@@ -1,17 +1,19 @@
 {
   "name": "sepa-tool",
-  "version": "0.0.0",
-  "private": false,
+  "version": "1.0.0",
+  "description": "This tool allows the generation of SEPA XML files out of MOCO invoices.",
+  "main": "index.js",
   "scripts": {
-    "serve:backend": "netlify-lambda serve src/functions",
-    "build:backend": "netlify-lambda build src/functions"
+    "build": "(cd backend && yarn backend:build) && (cd frontend && "
   },
-  "dependencies": {
-    "await-delay": "^1.0.0",
-    "dotenv": "^6.0.0",
-    "netlify-lambda": "^0.4.0",
-    "node-fetch": "^2.1.2",
-    "parse-link-header": "latest",
-    "sepa": "^1.0.3"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Duplexmedia/sepa-tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Duplexmedia/sepa-tool/issues"
+  },
+  "homepage": "https://github.com/Duplexmedia/sepa-tool#readme"
 }
