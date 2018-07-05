@@ -4,5 +4,10 @@
     "rules": [
       "polymer-3"
     ]
-  }
+  },
+  "extraDependencies": [
+    "manifest.json",
+    "_redirects",
+    "node_modules/@webcomponents/webcomponentsjs/**"
+  ]
 }
