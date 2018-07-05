@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "serve:backend": "netlify-lambda serve src/functions",
-    "serve:frontend": "(cd frontend && polymer serve --proxy-target http://localhost:9000 --proxy-path api)"
+    "serve:frontend": "(cd frontend && polymer serve --proxy-target http://localhost:9000 --proxy-path api)",
     "build:backend": "netlify-lambda build src/functions",
     "build:frontend": "(cd frontend && polymer build)"
   },
