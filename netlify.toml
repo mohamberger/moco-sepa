@@ -1,4 +1,4 @@
 [build]
   functions = "functions"
-  command = "(cd backend && yarn backend:build) && (cd frontend && polymer build)"
-  publish = "frontend/build"
+  command = "yarn backend:build && yarn frontend:build"
+  publish = "frontend/build/default"
