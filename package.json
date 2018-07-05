@@ -17,6 +17,7 @@
     "node-fetch": "^2.1.2",
     "node-gravatar": "^1.0.2",
     "parse-link-header": "latest",
+    "polymer-cli": "^1.7.7",
     "sepa": "^1.0.3"
   }
 }
