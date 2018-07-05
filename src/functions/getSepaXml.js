@@ -1,14 +1,17 @@
 import {getSepaXml} from './lib/moco-api';
+import crc32 from 'crc-32';
 
 export const handler = async (event, context, callback) => {
     try {
+        const xml = (await getSepaXml()).toString();
+
         callback(null, {
             statusCode: 200,
             headers: {
-                'Content-Disposition': 'attachment;filename=moco-sepa.xml',
+                'Content-Disposition': `attachment;filename=moco-sepa-${crc32.str(xml).toString(16).substr(1)}.xml`,
                 'Content-Type': 'text/xml',
             },
-            body: (await getSepaXml()).toString()
+            body: xml
         })
     } catch (e) {
         callback(null, {

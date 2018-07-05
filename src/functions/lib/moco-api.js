@@ -1,5 +1,7 @@
 import fetch from './paginated-fetch';
 import SEPA from 'sepa';
+import gravatar from 'node-gravatar';
+import crc32 from 'crc-32';
 
 require('dotenv').config();
 
@@ -30,14 +32,14 @@ function parseDate(input) {
 export async function getSepaTransfers() {
     const [invoices, projects] = await Promise.all([
         mocoRequest('invoices/?status=sent'),
-        mocoRequest('projects?include_archived=true&include_company=true')
+        mocoRequest('projects?include_company=true')
     ]);
 
     return (await Promise.all(invoices.map(async i => {
         const project = projects.filter(p => p.id === i.project_id)[0];
 
         if(!project) {
-            throw Error(`No project with id ${i.project_id} found!`);
+            return;
         }
 
         if (
@@ -51,6 +53,8 @@ export async function getSepaTransfers() {
         const customer = project.customer;
 
         return {
+            id: i.id,
+            title: i.title,
             total: i.gross_total,
             date: i.date,
             due_date: parseDate(i.due_date),
@@ -62,25 +66,28 @@ export async function getSepaTransfers() {
             mandate_date: parseDate(customer.custom_properties['Eingangsdatum des Mandates']),
             project_id: i.project_id,
             customer_id: i.customer_id,
+            link: `https://${process.env.MOCO_WORKSPACE}.mocoapp.com/invoices/${i.id}`,
+            image: gravatar.get(customer.email || Math.random().toString(), 'r', '80', 'mp')
         }
     }))).filter(i => i);
 }
 
 export async function getSepaXml() {
+    const transfers = (await getSepaTransfers());
     const sepaDocument = new SEPA.Document('pain.008.003.02');
-    sepaDocument.grpHdr.id = `DPLX.${Date.now()}.TR0`;
+    sepaDocument.grpHdr.id = `DM.${crc32.str(transfers.map(t => t.id).join()).toString(16).substr(1)}`;
     sepaDocument.grpHdr.created = new Date();
     sepaDocument.grpHdr.initiatorName = process.env.CREDITOR_NAME;
 
     const info = sepaDocument.createPaymentInfo();
-    info.collectionDate = Date.now() + (1000 * 60 * 60 * 24 * (process.env.COLLECTION_DAYS || 14));
+    info.collectionDate = new Date(Date.now() + (1000 * 60 * 60 * 24 * (process.env.COLLECTION_DAYS || 14)));
     info.creditorIBAN = process.env.CREDITOR_IBAN;
     info.creditorBIC = process.env.CREDITOR_BIC;
     info.creditorName = process.env.CREDITOR_NAME;
     info.creditorId = process.env.CREDITOR_ID;
     sepaDocument.addPaymentInfo(info);
 
-    for(let s of await getSepaTransfers()) {
+    for(let s of transfers) {
         const tx = info.createTransaction();
         tx.debtorName = s.debtor_name;
         tx.debtorIBAN = s.iban;
