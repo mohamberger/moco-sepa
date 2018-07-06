@@ -1,5 +1,4 @@
 import {getSepaTransfers} from './lib/moco-api';
-import {injectAuth} from "./lib/auth";
 
 const injectReplyJson = handler => (event, context, callback) => handler(event, context, (code, body) => {
     callback(null, {
@@ -12,6 +11,11 @@ const injectReplyJson = handler => (event, context, callback) => handler(event, 
 });
 
 export const handler = injectAuth(injectReplyJson(async (event, context, reply) => {
+    if (context.clientContext && !context.clientContext.user) {
+        reply(401, {error: "Authorization failed."});
+        return;
+    }
+
     try {
         const transfers = await getSepaTransfers();
         reply(200, transfers);

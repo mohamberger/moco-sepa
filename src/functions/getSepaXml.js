@@ -1,8 +1,18 @@
 import {getSepaXml} from './lib/moco-api';
-import {injectAuth} from "./lib/auth";
 import crc32 from 'crc-32';
 
 export const handler = injectAuth(async (event, context, callback) => {
+    if (context.clientContext && !context.clientContext.user) {
+        callback(null, {
+            statusCode: 401,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({error: "Authorization failed."})
+        });
+        return;
+    }
+
     try {
         const xml = (await getSepaXml()).toString();
 
