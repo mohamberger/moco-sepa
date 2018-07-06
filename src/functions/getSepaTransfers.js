@@ -10,7 +10,7 @@ const injectReplyJson = handler => (event, context, callback) => handler(event, 
     })
 });
 
-export const handler = injectAuth(injectReplyJson(async (event, context, reply) => {
+export const handler = injectReplyJson(async (event, context, reply) => {
     if (context.clientContext && !context.clientContext.user) {
         reply(401, {error: "Authorization failed."});
         return;
@@ -22,4 +22,4 @@ export const handler = injectAuth(injectReplyJson(async (event, context, reply) 
     } catch (e) {
         reply(500, {error: e.message});
     }
-}));
+});

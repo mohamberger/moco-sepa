@@ -1,7 +1,7 @@
 import {getSepaXml} from './lib/moco-api';
 import crc32 from 'crc-32';
 
-export const handler = injectAuth(async (event, context, callback) => {
+export const handler = async (event, context, callback) => {
     if (context.clientContext && !context.clientContext.user) {
         callback(null, {
             statusCode: 401,
@@ -33,4 +33,4 @@ export const handler = injectAuth(async (event, context, callback) => {
             body: JSON.stringify({error: e.message})
         })
     }
-});
+};
