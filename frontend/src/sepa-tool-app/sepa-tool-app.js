@@ -126,7 +126,14 @@ class SepaToolApp extends PolymerElement {
     }
 
     async loadList() {
-        const results = await (await fetch('/api/getSepaTransfers')).json();
+        const user = await netlifyIdentity.currentUser();
+        if(!user) {
+            return;
+        }
+
+        const results = await (await fetch('/api/getSepaTransfers', {headers: {
+            "Authorization": `Bearer ${await user.jwt()}`,
+        }})).json();
         this.loading = false;
 
         if(results.error) {
