@@ -5,6 +5,13 @@
       "polymer-3"
     ]
   },
+  "builds": [{
+    "bundle": true,
+    "sourcemaps": true,
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  }],
   "extraDependencies": [
     "manifest.json",
     "_redirects",
