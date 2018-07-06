@@ -11,7 +11,7 @@ const injectReplyJson = handler => (event, context, callback) => handler(event, 
     })
 });
 
-export const handler = injectReplyJson(injectAuth(async (event, context, reply) => {
+export const handler = injectAuth(injectReplyJson(async (event, context, reply) => {
     try {
         const transfers = await getSepaTransfers();
         reply(200, transfers);
