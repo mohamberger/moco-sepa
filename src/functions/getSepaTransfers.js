@@ -9,6 +9,8 @@ const injectReplyJson = handler => (event, context, callback) => handler(event, 
 }));
 
 export const handler = injectReplyJson(async (event, context, reply) => {
+    console.log(context.clientContext);
+
     try {
         const transfers = await getSepaTransfers();
         reply(200, transfers);
