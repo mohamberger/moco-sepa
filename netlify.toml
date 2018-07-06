@@ -2,3 +2,12 @@
   functions = "functions"
   command = "yarn build:backend && yarn build:frontend"
   publish = "frontend/build/default"
+
+[template.environment]
+  MOCO_WORKSPACE = "The MOCO subdomain you're working in"
+  MOCO_TOKEN = "Your MOCO Token"
+  COLLECTION_DAYS = "Number of days from now when SEPA collection will take place"
+  CREDITOR_NAME = "Your company name"
+  CREDITOR_IBAN = "Your company IBAN"
+  CREDITOR_BIC = "Your company BIC"
+  CREDITOR_ID = "Your creditor ID (e.g. DEXXZZZXXXXXXXXXX3)"
