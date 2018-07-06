@@ -2,12 +2,14 @@
   "name": "sepa-tool",
   "dependencies": {
     "@polymer/iron-icons": "^3.0.0-pre.21",
+    "@polymer/iron-pages": "^3.0.0-pre.21",
     "@polymer/paper-button": "^3.0.0-pre.21",
     "@polymer/paper-card": "^3.0.0-pre.21",
     "@polymer/paper-icon-button": "^3.0.0-pre.21",
     "@polymer/paper-item": "^3.0.0-pre.21",
     "@polymer/paper-spinner": "^3.0.0-pre.21",
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "netlify-identity-widget": "^1.4.14"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",

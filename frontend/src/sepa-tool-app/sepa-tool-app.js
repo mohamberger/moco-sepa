@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import 'netlify-identity-widget';
 
 import '@polymer/polymer/lib/elements/dom-repeat';
 import '@polymer/paper-button/paper-button';
@@ -8,6 +9,7 @@ import '@polymer/paper-item/paper-icon-item';
 import '@polymer/paper-item/paper-item-body';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/iron-icons/iron-icons';
+import '@polymer/iron-pages/iron-pages';
 
 /**
  * @customElement
@@ -58,30 +60,39 @@ class SepaToolApp extends PolymerElement {
                     background-color: #38b5eb;
                     color: #fff;
                     margin: 0;
+                    width: 100%;
                 }
             </style>
             
             <h1>SEPA Export</h1>
             
-            <paper-card heading="Available Transactions">
-                <div class="spinner" hidden$="[[!loading]]">
-                    <paper-spinner active></paper-spinner>
+            <iron-pages selected="[[page]]" attr-for-selected="page">
+                <div page="login">
+                    <paper-button raised on-tap="login">Login</paper-button>
                 </div>
-                <div class="transactions">
-                    <template is="dom-repeat" items="[[transactions]]">
-                        <paper-icon-item>
-                            <img class="avatar" slot="item-icon" src="[[item.image]]" alt="Customer Avatar">
-                            <paper-item-body two-line>
-                                <div>[[item.title]]</div>
-                                <div secondary>[[item.debtor_name]] &middot; [[item.total]] €</div>
-                            </paper-item-body>
-                            <paper-icon-button icon="open-in-new" alt="Open invoice in MOCO" on-tap="openInvoice"></paper-icon-button>
-                        </paper-icon-item>
-                    </template>
+                
+                <div page="list">
+                    <paper-card heading="Available Transactions">
+                        <div class="spinner" hidden$="[[!loading]]">
+                            <paper-spinner active></paper-spinner>
+                        </div>
+                        <div class="transactions">
+                            <template is="dom-repeat" items="[[transactions]]">
+                                <paper-icon-item>
+                                    <img class="avatar" slot="item-icon" src="[[item.image]]" alt="Customer Avatar">
+                                    <paper-item-body two-line>
+                                        <div>[[item.title]]</div>
+                                        <div secondary>[[item.debtor_name]] &middot; [[item.total]] €</div>
+                                    </paper-item-body>
+                                    <paper-icon-button icon="open-in-new" alt="Open invoice in MOCO" on-tap="openInvoice"></paper-icon-button>
+                                </paper-icon-item>
+                            </template>
+                        </div>
+                    </paper-card>
+                    
+                    <paper-button raised on-tap="downloadXml">Download SEPA XML file</paper-button>
                 </div>
-            </paper-card>
-            
-            <paper-button raised on-tap="downloadXml">Download SEPA XML file</paper-button>
+            </iron-pages>
         `;
     }
 
@@ -94,6 +105,10 @@ class SepaToolApp extends PolymerElement {
             loading: {
                 type: Boolean,
                 value: true
+            },
+            page: {
+                type: String,
+                value: 'login'
             }
         };
     }
@@ -106,9 +121,11 @@ class SepaToolApp extends PolymerElement {
         window.open('/api/getSepaXml');
     }
 
-    async ready() {
-        super.ready();
+    login() {
+        netlifyIdentity.open('login');
+    }
 
+    async loadList() {
         const results = await (await fetch('/api/getSepaTransfers')).json();
         this.loading = false;
 
@@ -118,6 +135,24 @@ class SepaToolApp extends PolymerElement {
         }
 
         this.transactions = results;
+    }
+
+    async ready() {
+        super.ready();
+
+        const handleLogin = user => {
+            console.log(user);
+
+            if(user) {
+                this.page = 'list';
+                this.loadList();
+            }
+        };
+
+        netlifyIdentity.on("init", handleLogin);
+        netlifyIdentity.on("login", handleLogin);
+
+        netlifyIdentity.init();
     }
 }
 
