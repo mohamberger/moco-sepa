@@ -117,8 +117,21 @@ class SepaToolApp extends PolymerElement {
         window.open(e.model.get('item.link'));
     }
 
-    downloadXml() {
-        window.open('/api/getSepaXml');
+    async downloadXml() {
+        const user = await netlifyIdentity.currentUser();
+        if(!user) {
+            return;
+        }
+
+        const xml = await (await fetch('/api/getSepaXml', {headers: {
+            "Authorization": `Bearer ${await user.jwt()}`,
+        }})).blob();
+
+        const url = window.URL.createObjectURL(xml);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "moco-sepa.xml";
+        a.click();
     }
 
     login() {
