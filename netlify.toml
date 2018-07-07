@@ -6,7 +6,7 @@
 [template.environment]
   MOCO_WORKSPACE = "The MOCO subdomain you're working in"
   MOCO_TOKEN = "Your MOCO Token"
-  COLLECTION_DAYS = "Number of days from now when SEPA collection will take place"
+  COLLECTION_DAYS = "Number of days for SEPA collection"
   CREDITOR_NAME = "Your company name"
   CREDITOR_IBAN = "Your company IBAN"
   CREDITOR_BIC = "Your company BIC"
