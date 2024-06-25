@@ -74,7 +74,7 @@ export async function getSepaTransfers() {
 
 export async function getSepaXml() {
     const transfers = (await getSepaTransfers());
-    const sepaDocument = new SEPA.Document('pain.008.001.08');
+    const sepaDocument = new SEPA.Document('pain.008.001.02');
     sepaDocument.grpHdr.id = `DM.${crc32.str(transfers.map(t => t.id).join()).toString(16).substr(1)}`;
     sepaDocument.grpHdr.created = new Date();
     sepaDocument.grpHdr.initiatorName = process.env.CREDITOR_NAME;
