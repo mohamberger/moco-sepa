@@ -2,6 +2,7 @@ import fetch from './paginated-fetch';
 import SEPA from 'sepa';
 import gravatar from 'node-gravatar';
 import crc32 from 'crc-32';
+import xml2js from 'xml2js';
 
 require('dotenv').config();
 
@@ -101,6 +102,21 @@ export async function getSepaXml() {
         tx.end2endId = `${s.mandate_reference}.${s.remittanceInfo}`;
         info.addTransaction(tx);
     }
+
+    const xml = sepaDocument.toString();
+    
+    // Log the XML for debugging
+    console.log(xml);
+
+    // Parse and log the JSON structure for validation
+    const parser = new xml2js.Parser({ explicitArray: false });
+    parser.parseString(xml, (err, result) => {
+        if (err) {
+            console.error("Error parsing XML to JSON:", err);
+        } else {
+            console.log("Parsed JSON:", JSON.stringify(result, null, 2));
+        }
+    });
 
     return sepaDocument;
 }
