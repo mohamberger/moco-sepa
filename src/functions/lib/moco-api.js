@@ -91,7 +91,7 @@ export async function getSepaXml() {
         const tx = info.createTransaction();
         tx.debtorName = s.debtor_name;
         tx.debtorIBAN = s.iban;
-        tx.debtorBIC = 'DUSSDEDDXXX';
+        tx.debtorBIC = s.bic;
         tx.mandateId = s.mandate_reference;
         tx.mandateSignatureDate = s.mandate_date;
         tx.amount = s.total;
