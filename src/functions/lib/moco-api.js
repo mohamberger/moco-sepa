@@ -85,7 +85,6 @@ export async function getSepaXml() {
     info.creditorBIC = process.env.CREDITOR_BIC;
     info.creditorName = process.env.CREDITOR_NAME;
     info.creditorId = process.env.CREDITOR_ID;
-    info.localInstrumentation = 'COR1';
     sepaDocument.addPaymentInfo(info);
 
     for(let s of transfers) {
