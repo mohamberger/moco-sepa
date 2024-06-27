@@ -1011,6 +1011,11 @@
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-1.2.2.tgz#a0d1f87e45a8222e70a98d4b7a8dc878cced2f9a"
 
+"@xmldom/xmldom@*":
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz#a1337ca426aa61cef9fe15b5b28e340a72f6fa99"
+  integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -7038,10 +7043,11 @@ send@^0.11.1:
     range-parser "~1.0.2"
 
 sepa@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/sepa/-/sepa-1.0.3.tgz#0368622216ccb2c4407c9d8cd61a1a7768e9243e"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sepa/-/sepa-1.1.0.tgz#422946570210da74d4435e1a46b72433508d99b5"
+  integrity sha512-U21a6U5Puu10u7bvAvvDLsjQAR7NYnIpLiaWYjsMBsuwMnILIvxBRtvHJxLQtngXBc0hq1Qrw/+8GG4zBrTy5g==
   dependencies:
-    xmldom "*"
+    "@xmldom/xmldom" "*"
 
 serve-static@1.13.2:
   version "1.13.2"
@@ -8392,7 +8398,7 @@ xmlbuilder@8.2.2:
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
 
-xmldom@*, xmldom@0.1.x:
+xmldom@0.1.x:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
